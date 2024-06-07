@@ -1,9 +1,11 @@
 let cookieCount = 0;
-let cookiePerSecond = 0;
+let cookiePerSecond = 1;
 const startButton = document.getElementById("start-button");
 const counterDisplay = document.querySelector(".counters");
 const cookieDisplay = document.getElementById("cookie-count");
 const shopContainer = document.querySelector(".shop-container");
+const cpsDisplay = document.getElementById("cookie-per-second");
+const form = document.querySelector("form");
 
 let shopItems = [];
 async function getShopItems() {
@@ -13,14 +15,15 @@ async function getShopItems() {
   const json = await response.json();
   shopItems.push(json);
   shopItems = shopItems[0];
-  console.log(shopItems[0].name);
 }
 
-function fillShop() {
+function renderShop() {
   shopItems.forEach((shopItem) => {
     const item = document.createElement("p");
     const cost = document.createElement("p");
     const increase = document.createElement("p");
+    cost.classList.add("p-middle");
+    increase.classList.add("p-end");
     const div = document.createElement("div");
     item.textContent = shopItem.name;
     cost.textContent = shopItem.cost;
@@ -34,7 +37,7 @@ function fillShop() {
 
 async function displayShop() {
   const wrangledShop = await getShopItems();
-  fillShop(wrangledShop);
+  renderShop(wrangledShop);
 }
 displayShop();
 
@@ -43,7 +46,26 @@ startButton.addEventListener("click", () => {
   cookieCount += 1;
   console.log(cookieCount);
   cookieDisplay.innerText = "Cookie Count : " + cookieCount;
+  cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
 });
+
+startButton.addEventListener(
+  "click",
+  () => {
+    function repeatMyself() {
+      cookieCount += 1;
+    }
+    setInterval(repeatMyself, 1000);
+  },
+  { once: true }
+);
+
+// startButton.addEventListener("click", (event) => {
+//   event.preventDefault();
+//   const cookieData = new FormData(form);
+//   const cookieValues = Object.fromEntries(cookieData);
+//   console.log(cookieValues);
+// });
 
 // have all the game in one fucntion
 // need to check if any values stored in local storage
@@ -55,11 +77,11 @@ startButton.addEventListener("click", () => {
 // display shop items on page
 
 // we need a timer to increase the cookies we get every second
-setInterval(function () {
-  //increase the value of cookiecounter by 1 each second
-  // i want to update the value displayed on the page (or could have in seperate function that you call inside interval such as updateDisplay())
-  // update in local storage or could have in seperate function that you call inside interval such as save local storage())
-}, 1000);
+
+setInterval(function () {});
+//increase the value of cookiecounter by 1 each second
+// i want to update the value displayed on the page (or could have in seperate function that you call inside interval such as updateDisplay())
+// update in local storage or could have in seperate function that you call inside interval such as save local storage())
 
 // help if you want to put tasks into different fucntions
 function updateDisplay() {
@@ -72,8 +94,8 @@ function saveLocalStorage() {
   // method to set items into key and value in local storage
 }
 
-function renderShop() {
-  // create dom elements to display your shop items
-  // can use for loop or array method
-  // shopItems.forEach(() => {});
-}
+// function renderShop() {
+// create dom elements to display your shop items
+// can use for loop or array method
+// shopItems.forEach(() => {});
+// }
