@@ -16,20 +16,24 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 1rem;
+  padding-bottom: 0.5rem;
   border: 5px solid #491e16;
   border-radius: 15px;
-  /* overflow-y: auto; */
 }
 
 img {
   width: 100%;
-  /* display: inline-block; */
-  /* pointer-events: all; */
 }
 
 img:hover {
   cursor: pointer;
   transform: scale(1.1);
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+img:not(:hover) {
+  transform: scale(1);
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
 }
@@ -58,9 +62,18 @@ input[type="submit"] {
 }
 
 #reset-button {
+  color: white;
   font-family: Arial, Helvetica, sans-serif;
-  position: fixed;
-  bottom: 0;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #491e16;
+  border-radius: 10px;
+}
+
+#reset-button:hover {
+  background-color: red;
 }
 
 .counters {
@@ -134,7 +147,7 @@ input[type="submit"] {
 
   .shop-container {
     width: 60vw;
-    padding-top: 2rem;
+    padding-top: 1rem;
   }
 
   .shop-container > div {
