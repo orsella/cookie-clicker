@@ -5,7 +5,6 @@ const counterDisplay = document.querySelector(".counters");
 const cookieDisplay = document.getElementById("cookie-count");
 const shopContainer = document.querySelector(".shop-container");
 const cpsDisplay = document.getElementById("cookie-per-second");
-const form = document.querySelector("form");
 
 let shopItems = [];
 async function getShopItems() {
@@ -44,9 +43,10 @@ displayShop();
 //turn into function
 startButton.addEventListener("click", () => {
   cookieCount += 1;
-  console.log(cookieCount);
   cookieDisplay.innerText = "Cookie Count : " + cookieCount;
   cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
+  localStorage.setItem("cookies", cookieCount.toString());
+  localStorage.setItem("cookiesPerSec", cookiePerSecond.toString());
 });
 
 startButton.addEventListener(
@@ -60,12 +60,15 @@ startButton.addEventListener(
   { once: true }
 );
 
-// startButton.addEventListener("click", (event) => {
-//   event.preventDefault();
-//   const cookieData = new FormData(form);
-//   const cookieValues = Object.fromEntries(cookieData);
-//   console.log(cookieValues);
-// });
+function updateDisplay() {
+  let retrievedCookies = localStorage.getItem("cookies");
+  let retrievedCookiesPerSec = localStorage.getItem("cookiesPerSec");
+  let cookieNum = Number(retrievedCookies);
+  let cookieNumPerSec = Number(retrievedCookiesPerSec);
+  cookieCount = cookieNum;
+  cookiePerSecond = cookieNumPerSec;
+}
+updateDisplay();
 
 // have all the game in one fucntion
 // need to check if any values stored in local storage
@@ -84,10 +87,9 @@ setInterval(function () {});
 // update in local storage or could have in seperate function that you call inside interval such as save local storage())
 
 // help if you want to put tasks into different fucntions
-function updateDisplay() {
-  //update the dom element containing the value of cookiecounter e.g p tag
-  //update content value of cookies from local storage (current total)
-}
+// function updateDisplay() {
+//update the dom element containing the value of cookiecounter e.g p tag
+//update content value of cookies from local storage (current total)
 
 function saveLocalStorage() {
   //a method to turn your data into string
