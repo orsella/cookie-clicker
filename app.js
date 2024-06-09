@@ -33,6 +33,7 @@ function renderShop() {
     item.textContent = shopItem.name;
     cost.textContent = shopItem.cost;
     increase.textContent = shopItem.increase;
+    button.addEventListener("click", () => upgrades(shopItem));
     div.appendChild(item);
     div.appendChild(cost);
     div.appendChild(increase);
@@ -60,20 +61,24 @@ function startInterval() {
   if (!startedInterval) {
     startedInterval = true;
     myInterval = setInterval(() => {
-      addCPS();
-      addCookie();
+      addCookiesPerSecond();
       saveLocalStorage();
       updateDisplay();
     }, 1000);
   }
 }
 
-function addCPS() {
-  cookiePerSecond = 1;
-}
-
 function addCookie() {
   cookieCount += 1;
+  updateCookieDisplay();
+}
+
+function addCookiesPerSecond() {
+  cookieCount += cookiePerSecond;
+  updateCookieDisplay();
+}
+
+function updateCookieDisplay() {
   cookieDisplay.innerText = "Cookie Count : " + cookieCount;
   cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
 }
@@ -103,10 +108,13 @@ resetButton.addEventListener("click", () => {
   startedInterval = false;
 });
 
-// let purchases = document.querySelector(".purchase");
-// console.log(purchases);
-
-// purchases.addEventListener("click", () => {
-//   console.log(div);
-//   console.log("hi");
-// });
+function upgrades(shopItem) {
+  if (cookieCount >= shopItem.cost) {
+    cookieCount -= shopItem.cost;
+    cookiePerSecond += shopItem.increase;
+    saveLocalStorage();
+    updateDisplay();
+  } else {
+    console.log("not enough cookies");
+  }
+}
