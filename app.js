@@ -24,16 +24,20 @@ function renderShop() {
     const item = document.createElement("p");
     const cost = document.createElement("p");
     const increase = document.createElement("p");
+    item.classList.add("p-start");
     cost.classList.add("p-middle");
     increase.classList.add("p-end");
+    const button = document.createElement("button");
     const div = document.createElement("div");
+    button.classList.add("purchase");
     item.textContent = shopItem.name;
     cost.textContent = shopItem.cost;
     increase.textContent = shopItem.increase;
     div.appendChild(item);
     div.appendChild(cost);
     div.appendChild(increase);
-    shopContainer.appendChild(div);
+    button.appendChild(div);
+    shopContainer.appendChild(button);
   });
 }
 
@@ -98,3 +102,11 @@ resetButton.addEventListener("click", () => {
   cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
   startedInterval = false;
 });
+
+// let purchases = document.querySelector(".purchase");
+// console.log(purchases);
+
+// purchases.addEventListener("click", () => {
+//   console.log(div);
+//   console.log("hi");
+// });
