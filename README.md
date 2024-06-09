@@ -16,7 +16,3 @@ What went really well and what could have gone better?
 Detailing useful external sources that helped you complete the assignment (e.g Youtube tutorials).
 Describing errors or bugs you encountered while completing your assignment.
 Requesting feedback about a specific part of your submission.
-
-https://stackoverflow.com/questions/28610365/how-can-i-add-an-event-for-a-one-time-click-to-a-function
-
-img not hover

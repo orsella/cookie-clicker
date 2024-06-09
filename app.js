@@ -1,5 +1,7 @@
 let cookieCount = 0;
 let cookiePerSecond = 1;
+let startedInterval = false;
+let myInterval;
 const startButton = document.getElementById("start-button");
 const resetButton = document.getElementById("reset-button");
 const counterDisplay = document.querySelector(".counters");
@@ -41,25 +43,41 @@ async function displayShop() {
 }
 displayShop();
 
-//turn into function
 startButton.addEventListener("click", () => {
+  addCookie();
+  startInterval();
+});
+
+window.onload = function () {
+  updateDisplay();
+};
+
+function startInterval() {
+  if (!startedInterval) {
+    startedInterval = true;
+    myInterval = setInterval(() => {
+      addCPS();
+      addCookie();
+      saveLocalStorage();
+      updateDisplay();
+    }, 1000);
+  }
+}
+
+function addCPS() {
+  cookiePerSecond = 1;
+}
+
+function addCookie() {
   cookieCount += 1;
   cookieDisplay.innerText = "Cookie Count : " + cookieCount;
   cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
+}
+
+function saveLocalStorage() {
   localStorage.setItem("cookies", cookieCount.toString());
   localStorage.setItem("cookiesPerSec", cookiePerSecond.toString());
-});
-
-startButton.addEventListener(
-  "click",
-  () => {
-    function repeatMyself() {
-      cookieCount += 1;
-    }
-    setInterval(repeatMyself, 1000);
-  },
-  { once: true }
-);
+}
 
 function updateDisplay() {
   let retrievedCookies = localStorage.getItem("cookies");
@@ -69,21 +87,14 @@ function updateDisplay() {
   cookieCount = cookieNum;
   cookiePerSecond = cookieNumPerSec;
 }
-updateDisplay();
-
-// we need a timer to increase the cookies we get every second
-
-setInterval(function () {});
-//increase the value of cookiecounter by 1 each second
-// i want to update the value displayed on the page (or could have in seperate function that you call inside interval such as updateDisplay())
-// update in local storage or could have in seperate function that you call inside interval such as save local storage())
-
-function saveLocalStorage() {
-  //a method to turn your data into string
-  // method to set items into key and value in local storage
-}
 
 resetButton.addEventListener("click", () => {
+  clearInterval(myInterval);
+  cookieCount = 0;
+  cookiePerSecond = 1;
   localStorage.removeItem("cookies");
   localStorage.removeItem("cookiesPerSec");
+  cookieDisplay.innerText = "Cookie Count : " + cookieCount;
+  cpsDisplay.innerText = "Cookies Per Second : " + cookiePerSecond;
+  startedInterval = false;
 });
